@@ -1,0 +1,38 @@
+%sql
+SELECT 
+  faixa_renda, 
+  estado,
+  count(1) as Total,
+  sum(CASE WHEN Status = 'Ganho' then 1 else 0 end) as Retorno,
+  round(sum(CASE WHEN Status = 'Ganho' then 1 else 0 end) / Count(1),4)*100. as Percentual_Retorno
+FROM Leads
+WHERE estado <> 'Não desejo Informar'
+GROUP BY  faixa_renda, 
+estado
+ORDER BY 3;
+
+
+
+%sql
+SELECT 
+  Sexo,
+  count(1) as Total,
+  sum(CASE WHEN Status = 'Ganho' then 1 else 0 end) as Retorno,
+  round(sum(CASE WHEN Status = 'Ganho' then 1 else 0 end) / Count(1),4)*100. as Percentual_Retorno
+FROM Leads
+WHERE estado <> 'Não desejo Informar'
+GROUP BY  sexo
+ORDER BY 3;
+
+
+%sql
+SELECT       
+                    CAST(DataCriacao as date) as DataCompra,
+                    COUNT(1)          AS TotalCompra
+                  FROM leads
+                  WHERE status = 'Ganho'
+                  GROUP BY
+                    CAST(DataCriacao as date);
+
+
+
